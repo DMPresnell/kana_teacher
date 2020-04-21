@@ -1,0 +1,19 @@
+main.py moves between screens
+
+screens instantiate and control widgets
+
+
+
+
+main.py
+    
+    import tkinter
+    import screens
+    
+    instantiate the root window
+ 
+    call function from start screens.start_scrn to kick it off
+    
+    pack the start screen in root
+    
+    call mainloop()

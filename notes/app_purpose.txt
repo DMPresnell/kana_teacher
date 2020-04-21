@@ -1,0 +1,52 @@
+Japanese Kana learning app
+
+Will teach:
+    -katakana
+    -hiragana
+    -stroke order
+    -pronunciation
+
+Activities:
+
+    -Most beginner-friendly activity will be drawing kana following
+        a spoken example and stroke order example.
+    
+    Quizzes:
+        Options for katakana, hiragana, or mix
+        Various criteria for kana selection, based on user progress.
+        
+        -Drawing kana from memory:
+            -Draw kana using proper stroke order:
+                -Options:
+                    -Just a spoken prompt,
+                    -Spoken prompt AND image of character.
+                -Review:
+                    -Display image of character showing stroke order.
+            
+        -Speak the character:
+            -Show image of character and strokes.
+            -Review:
+                -Play audio of spoken character.
+                
+Details:
+    
+    -Lesson plans:
+        Come up with a real basic lesson plan.  Maybe start from the vowels,
+            both hira and kata at once, and then go by consonant.  Or maybe
+            learn kata and hira separately?  Research.
+    
+    -Save profiles.
+        Basic stuff.  Should allow the user more options to select kana
+            groupings for testing.  Will also enable continuing the linear
+            lesson plan.
+        -Record what has been "learned" as individual kana, or as groups?
+            Leaning towards: group by consonants and none of the kana are
+            learned unless the entire group is learned (ka, ku, ke, ki, ko).
+        -Will allow quiz options such as:
+            -Random selection of learned kana, of specified length.
+            -Selection of specific kana groups
+    
+    -EXTRA:
+        -kanji
+        -GUI Japn/Eng language interface toggle
+        -Set session time, learn and quiz until timer is reached.
