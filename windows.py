@@ -10,11 +10,11 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from playsound import playsound, PlaysoundException
 
-import kana_teacher.app.app_widgets as aw
+import kana_teacher.widgets as kw
 
 # Path to app images and sounds.
 ASSET_PATH = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "..", "assets")
+    os.path.dirname(os.path.realpath(__file__)), "assets")
 FONT = ("Helvetica", 20)
 SESS_SETTINGS = {
     "index": 0,     # Index of the kana being quizzed/learned.
@@ -145,8 +145,8 @@ class Setup(AppWindow):
         self.rowconfigure(6, weight=1)
         
         # The charts and their checkbuttons.
-        kata_chart = aw.KanaChart(self, "kata")
-        hira_chart = aw.KanaChart(self, "hira")
+        kata_chart = kw.KanaChart(self, "kata")
+        hira_chart = kw.KanaChart(self, "hira")
         self.off_chart = hira_chart
         self.on_chart = kata_chart
         
@@ -268,7 +268,7 @@ class Learn(AppWindow):
             kana = SESS_SETTINGS["kana"][SESS_SETTINGS["index"]]
         
         self.widgets["stroke_gif"].destroy()
-        self.widgets["stroke_gif"] = aw.ImageLabel(self)
+        self.widgets["stroke_gif"] = kw.ImageLabel(self)
         self.widgets["stroke_gif"].load(os.path.join(
             ASSET_PATH, "images", kana[1], kana[0] + ".gif"))
         self.widgets["stroke_gif"].grid(row=0, column=2, padx=4)
@@ -295,9 +295,9 @@ class Learn(AppWindow):
         path = os.path.join(ASSET_PATH, "images", "sound.png")
         self.audio_image = ImageTk.PhotoImage(file=path)
     
-        canvas = aw.DrawingCanvas(self)
-        stroke_gif = aw.ImageLabel(self) 
-        char_still = aw.ImageLabel(self) 
+        canvas = kw.DrawingCanvas(self)
+        stroke_gif = kw.ImageLabel(self) 
+        char_still = kw.ImageLabel(self) 
         audio_button = tk.Button(
             self, image=self.audio_image, command=self.play_audio) 
         quit_button = tk.Button(
@@ -376,7 +376,7 @@ class Speak(AppWindow):
             kana = SESS_SETTINGS["kana"][SESS_SETTINGS["index"]]
         
         self.widgets["stroke_gif"].destroy()
-        self.widgets["stroke_gif"] = aw.ImageLabel(self)
+        self.widgets["stroke_gif"] = kw.ImageLabel(self)
         self.widgets["stroke_gif"].load(os.path.join(
             ASSET_PATH, "images", kana[1], kana[0] + ".gif"))
         self.widgets["stroke_gif"].grid(row=0, column=2, padx=4)
@@ -393,7 +393,7 @@ class Speak(AppWindow):
         path = os.path.join(ASSET_PATH, "images", "sound.png")
         self.audio_image = ImageTk.PhotoImage(file=path)
         
-        stroke_gif = aw.ImageLabel(self)
+        stroke_gif = kw.ImageLabel(self)
         audio_button = tk.Button(
             self, image=self.audio_image, command=self.play_audio)
         quit_button = tk.Button(
@@ -474,7 +474,7 @@ class Write(AppWindow):
         self.widgets["canvas"].erase()
         
         self.widgets["stroke_gif"].destroy()
-        self.widgets["stroke_gif"] = aw.ImageLabel(self)
+        self.widgets["stroke_gif"] = kw.ImageLabel(self)
         self.widgets["stroke_gif"].load(os.path.join(
             ASSET_PATH, "images", kana[1], kana[0] + ".gif"))
         self.widgets["stroke_gif"].grid(row=0, column=2, padx=4)
@@ -505,11 +505,11 @@ class Write(AppWindow):
         path = os.path.join(ASSET_PATH, "images", "sound.png")
         self.audio_image = ImageTk.PhotoImage(file=path)
         
-        canvas = aw.DrawingCanvas(self)
+        canvas = kw.DrawingCanvas(self)
         show_button = tk.Button(
             self, text="Show Answer", font=FONT, command=self.show)
-        stroke_gif = aw.ImageLabel(self)
-        char_still = aw.ImageLabel(self)
+        stroke_gif = kw.ImageLabel(self)
+        char_still = kw.ImageLabel(self)
         audio_button = tk.Button(
             self, image=self.audio_image, command=self.play_audio)
         quit_button = tk.Button(

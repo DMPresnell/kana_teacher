@@ -2,7 +2,7 @@ import os
 import pytest
 import tkinter as tk
 
-from app.app_widgets import *
+from kana_teacher.widgets import *
 
 
 def test_kanachart():

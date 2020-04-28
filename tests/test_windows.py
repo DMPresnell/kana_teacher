@@ -1,8 +1,8 @@
 import pytest
 import tkinter as tk
 
-from app.app_windows import *
-from app.kana import KANA
+from kana_teacher.windows import *
+from kana_teacher.kana import KANA
 
 
 def test_app():

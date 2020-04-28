@@ -8,7 +8,7 @@ import tkinter as tk
 
 from PIL import Image, ImageTk
 
-from kana_teacher.app.kana import KANA
+from kana_teacher.kana import KANA
 
 FONT = ("Helvetica", 20)
 KANA_CHART_HIGH_BG = "green"

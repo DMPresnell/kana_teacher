@@ -1,5 +1,4 @@
-"""To enable python -m module syntax."""
-
-from kana_teacher.app.main import main
+"""Enable python -m sytax."""
+from kana_teacher.main import main
 
 main()

@@ -1,1 +1,3 @@
-from kana_teacher.app.main import main
+from kana_teacher.main import main
+
+__version__ = '0.1.0'
