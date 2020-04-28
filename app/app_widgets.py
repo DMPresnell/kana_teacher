@@ -1,36 +1,37 @@
 """
-Custom widgets used in the app windows.
+Custom widgets used in the app's windows.
 """
 
 from itertools import count
+import os
 import tkinter as tk
 
 from PIL import Image, ImageTk
 
-from kana_learning.kana import KANA
+from app.kana import KANA
 
 FONT = ("Helvetica", 20)
 KANA_CHART_HIGH_BG = "green"
 
 class KanaChart(tk.Frame):
-    """Builds a frame that displays either a chart of katakana or
-    hiragana.  Also has checkbuttons that will select columns/rows of
-    kana.
+    """Build a tkinter frame that displays a chart of either katakana
+    or hiragana.  Also has checkbuttons that will select columns/rows
+    of kana.
     """
     
     def __init__(self, master, kana_type, **kwargs):
-        
         super().__init__(master, **kwargs)
         self.build_chart(kana_type)
         
     def _checkb_wrapper(self, rc, index, var):
-        """'rc' should be either 'r' or 'c' (row or column).
-        'index' is the index of the row or column.
-        'var' is the variable associated with the checkbutton.
+        """Wrap _checkb_callback and return it.
+        
+        rc -- either "r" or "c" (row or column)
+        index -- the index of the column/row
+        var -- the checkbutton's variable
         """
-
         def _checkb_callback(*args):
-            
+            """Highlight or unhighlight a column or row of cells."""
             if rc == "r":
                 widgets = self.grid_slaves(row=index)
             elif rc == "c":
@@ -38,16 +39,11 @@ class KanaChart(tk.Frame):
                 
             for w in widgets:
                 if var.get():
-                    # Highlight row/column
                     w.config(bg=KANA_CHART_HIGH_BG)
                 elif not var.get():
-                    # Unhighlight row/column
                     if isinstance(w, tk.Checkbutton):
-                        # Checkbutton's unhilight to default color
                         w.config(bg="SystemButtonFace")
-                    else:
-                        # Don't unhighlight if selected by other 
-                        # column/row
+                    else:                        
                         info = w.grid_info()
                         r, c = info["row"], info["column"]
                         if rc == "r":
@@ -55,20 +51,24 @@ class KanaChart(tk.Frame):
                         else:
                             cb_r, cb_c = r, 0
                         cb = self.grid_slaves(row=cb_r, column=cb_c)[0]
-                        if cb.cget("bg") == KANA_CHART_HIGH_BG:
-                            continue
-                        w.config(bg="white")
+                        # Don't unhighlight if another checkbutton has
+                        # this cell selected.
+                        if cb.cget("bg") != KANA_CHART_HIGH_BG:
+                            w.config(bg="white")
         
         return _checkb_callback
         
     def build_chart(self, kana_type):
+        """Build either a katakana or hiragana chart.
         
+        kana_type -- "hira" or "kata"
+        """
         vowels = list("AIUEO")
         consonants = list(" KSTNHMYRWnGZDBP")
         
         # Digraphs not implemented yet, need solution for j digraphs...
         # digraphs = [
-            #"ky", "sh", "ch", "ny", "hy", "my", "ry", "gy", "by", "py"]
+            # "ky", "sh", "ch", "ny", "hy", "my", "ry", "gy", "by", "py"]
         
         let_var_dict = {}
         for letter in vowels + consonants:
@@ -123,12 +123,11 @@ class KanaChart(tk.Frame):
 
 
 class DrawingCanvas(tk.Frame):
-    """A tkinter Canvas/Button combo.  Is a basic sketch pad with a
-    button on the bottom that erases the entire canvas.
+    """A tkinter Canvas/Button combo.  It's a sketch pad with a
+    button attached to the bottom that erases the entire canvas.
     """
     
     def __init__(self, master, **kwargs):
-        
         super().__init__(master, bd=4, **kwargs)
         self.prev_pos = None 
         self.load_widgets()
@@ -136,7 +135,6 @@ class DrawingCanvas(tk.Frame):
         self.canvas.bind("<B1-Motion>", self.draw)
         
     def load_widgets(self):
-        
         self.canvas = tk.Canvas(
             self, cursor="dot", bg="white", bd=4, relief=tk.SUNKEN)
         
@@ -147,17 +145,14 @@ class DrawingCanvas(tk.Frame):
         self.erase_button.pack(fill="x")
         
     def start_draw(self, event):
-    
         self.prev_pos = (event.x, event.y)
         
     def draw(self, event):
-    
         coords = (self.prev_pos[0], self.prev_pos[1], event.x, event.y)
         self.prev_pos = (event.x, event.y)
         self.canvas.create_line(coords, width=5)
         
     def erase(self):
-
         for item in self.canvas.find_all():
             self.canvas.delete(item)   
 
@@ -165,37 +160,33 @@ class DrawingCanvas(tk.Frame):
 class ImageLabel(tk.Label):
     """Displays a still image, text, or loops through multiple frames.
     Can be passed either a filepath string or a PIL Image object.
-    Optional keyword 'frame' is the index of the frame to display as a
-    still.
+    Optional keyword 'frame' is the index of the frame to display
+    as a still.
     """
-    
-    # TODO: handle resizing
-    
+
     def _next_frame(self):
         """Loops through frames."""
-        
         self.config(image=self.frames[self.loc])
         self.loc += 1
         self.loc %= len(self.frames)
         self.after(self.delay, self._next_frame)
 
     def load(self, im, frame=None):
-        """Loads up the passed Image object or filename.  If the
-        filename doesn't exist, uses text instead.
-        """
+        """Config to display an image or text.
         
-        # im can be either str or a PIL Image object
+        im -- filepath string or PIL Image object
+        frame -- index of the frame to display
+        """
         if isinstance(im, str):
             try:    
                 im = Image.open(im)
             except:
-                # If no gif or image file for the kana exists, just use
-                # text.
-                l = im.split("/")
+                # If there's no gif or image for the kana, use text.
+                l = im.split(os.path.sep)
                 k_type = l[-2]
                 if k_type == "hira":
                     k_index = 1
-                if k_type == "kata":
+                elif k_type == "kata":
                     k_index = 2
                 k = l[-1].split(".")[0]
                 for x in KANA:
@@ -216,12 +207,12 @@ class ImageLabel(tk.Label):
         
         if not self.frames:
             return
-        # If only one frame, return as a still image.
+        # If there's only one frame, return as a still image.
         elif len(self.frames) == 1:
             self.config(image=self.frames[0])
             return
         
-        # If a frame index was passed, set that frame as the still.
+        # If a frame was passed, set that frame as the still.
         if frame:
             try:
                 self.config(image=self.frames[frame])
@@ -237,7 +228,7 @@ class ImageLabel(tk.Label):
         self._next_frame()    
             
     def unload(self):
-        
+        """Remove the image(s) or text."""
         self.config(image=None, text=None)
         self.frames = None
         
