@@ -8,7 +8,7 @@ import tkinter as tk
 
 from PIL import Image, ImageTk
 
-from app.kana import KANA
+from kana_teacher.app.kana import KANA
 
 FONT = ("Helvetica", 20)
 KANA_CHART_HIGH_BG = "green"
@@ -229,6 +229,6 @@ class ImageLabel(tk.Label):
             
     def unload(self):
         """Remove the image(s) or text."""
-        self.config(image=None, text=None)
-        self.frames = None
+        self.config(image="", text="")
+        self.frames = []
         

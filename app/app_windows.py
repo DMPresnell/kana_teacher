@@ -10,7 +10,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from playsound import playsound, PlaysoundException
 
-import app.app_widgets as aw
+import kana_teacher.app.app_widgets as aw
 
 # Path to app images and sounds.
 ASSET_PATH = os.path.join(

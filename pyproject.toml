@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "kana_learning"
-version = "0.1.0"
+name = "kana_teacher"
+version = "1.0.0"
 description = "Tkinter app for Japanese kana learning and practice."
 authors = ["Dane Hade <danepres@gmail.com>"]
 

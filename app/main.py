@@ -6,7 +6,7 @@ hiragana.  Implements tkinter for the GUI.
 import sys
 import tkinter as tk
 
-from app.app_windows import App
+from kana_teacher.app.app_windows import App
 
 def main():    
     root = tk.Tk()

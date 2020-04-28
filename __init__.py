@@ -1,0 +1,1 @@
+from kana_teacher.app.main import main
